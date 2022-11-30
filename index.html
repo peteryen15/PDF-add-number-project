@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF加編號</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Click the button to modify an existing PDF</h1>
+    </header>
+    <div>
+      <button onclick="modifyPdf()">Modify PDF</button>
+      <p class="small">(Your browser will download the resulting file)</p>
+    </div>
+  </body>
+
+  <script src="./node_modules/downloadjs/download.min.js"></script>
+  <script src="./node_modules/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="./app.js"></script>
+</html>
