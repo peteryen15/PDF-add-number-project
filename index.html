@@ -8,12 +8,26 @@
   </head>
   <body>
     <header>
-      <h1>Click the button to modify an existing PDF</h1>
+      <h1>PDF加編號</h1>
     </header>
-    <div>
-      <button onclick="modifyPdf()">Modify PDF</button>
-      <p class="small">(Your browser will download the resulting file)</p>
-    </div>
+    <section>
+      <div class="area1">
+        <p>
+          步驟1 : 輸入編號
+          <input type="text" id="inputNum" />
+        </p>
+        <p>
+          步驟2 : 選擇目標PDF
+          <input type="file" id="PDF" accept="application/pdf" />
+        </p>
+      </div>
+      <div class="area2">
+        <p>
+          步驟3 : 下載加上編號的 PDF
+          <button onclick="modifyPdf()">下載 PDF</button>
+        </p>
+      </div>
+    </section>
   </body>
 
   <script src="./node_modules/downloadjs/download.min.js"></script>

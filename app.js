@@ -1,14 +1,30 @@
 const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib;
 
+let file;
+let fileReader = new FileReader();
+
+let inputPDF = document.querySelector("#PDF");
+inputPDF.addEventListener("input", (e) => {
+  file = e.target.files[0];
+  fileReader.readAsArrayBuffer(file);
+});
+
+let number;
+
+let inputNum = document.querySelector("#inputNum");
+inputNum.addEventListener("input", (e) => {
+  number = e.target.value;
+});
+
 async function modifyPdf() {
-  const number = "000001";
+  // const number = "000001";
 
   // Fetch an existing PDF document
-  const url = "./test.pdf";
-  const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+  // const url = "./test1.pdf";
+  // const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
   // Load a PDFDocument from the existing PDF bytes
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  const pdfDoc = await PDFDocument.load(fileReader.result);
 
   // Embed the Helvetica font
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
