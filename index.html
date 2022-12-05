@@ -7,27 +7,40 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
-    <header>
-      <h1>PDF加編號</h1>
-    </header>
-    <section>
-      <div class="area1">
-        <p>
-          步驟1 : 輸入編號
-          <input type="text" id="inputNum" />
-        </p>
-        <p>
-          步驟2 : 選擇目標PDF
-          <input type="file" id="PDF" accept="application/pdf" />
-        </p>
-      </div>
-      <div class="area2">
-        <p>
-          步驟3 : 下載加上編號的 PDF
-          <button onclick="modifyPdf()">下載 PDF</button>
-        </p>
-      </div>
-    </section>
+    <table>
+      <tr>
+        <td></td>
+        <td>N95</td>
+        <td>南區</td>
+        <td>原制度</td>
+      </tr>
+      <tr>
+        <th>步驟一 : 選擇合約PDF</th>
+        <td>
+          <input type="file" id="PDF1" accept="application/pdf" class="step1" />
+        </td>
+        <td><input type="file" id="PDF2" accept="application/pdf" /></td>
+        <td><input type="file" id="PDF3" accept="application/pdf" /></td>
+      </tr>
+      <tr>
+        <th>步驟二 : 輸入份數</th>
+        <td><input type="number" id="inputNum1" min="0" /></td>
+        <td><input type="number" id="inputNum2" min="0" /></td>
+        <td><input type="number" id="inputNum3" min="0" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button onclick="modifyPdf()">下載 PDF</button></td>
+        <td><button onclick="modifyPdf()">下載 PDF</button></td>
+        <td><button onclick="modifyPdf()">下載 PDF</button></td>
+      </tr>
+      <tr>
+        <th>目前已套用編號</th>
+        <td>00000</td>
+        <td>00000</td>
+        <td>00000</td>
+      </tr>
+    </table>
   </body>
 
   <script src="./node_modules/downloadjs/download.min.js"></script>
