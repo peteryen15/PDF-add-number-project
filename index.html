@@ -17,22 +17,26 @@
       <tr>
         <th>步驟一 : 選擇合約PDF</th>
         <td>
-          <input type="file" id="PDF1" accept="application/pdf" class="step1" />
+          <input type="file" accept="application/pdf" id="selectPDF1" />
         </td>
-        <td><input type="file" id="PDF2" accept="application/pdf" /></td>
-        <td><input type="file" id="PDF3" accept="application/pdf" /></td>
+        <td>
+          <input type="file" accept="application/pdf" id="selectPDF2" />
+        </td>
+        <td>
+          <input type="file" accept="application/pdf" id="selectPDF3" />
+        </td>
       </tr>
       <tr>
         <th>步驟二 : 輸入份數</th>
-        <td><input type="number" id="inputNum1" min="0" /></td>
-        <td><input type="number" id="inputNum2" min="0" /></td>
-        <td><input type="number" id="inputNum3" min="0" /></td>
+        <td><input type="number" min="0" class="inputNum" id="inputNum1" /></td>
+        <td><input type="number" min="0" class="inputNum" id="inputNum2" /></td>
+        <td><input type="number" min="0" class="inputNum" id="inputNum3" /></td>
       </tr>
       <tr>
         <td></td>
-        <td><button onclick="modifyPdf()">下載 PDF</button></td>
-        <td><button onclick="modifyPdf()">下載 PDF</button></td>
-        <td><button onclick="modifyPdf()">下載 PDF</button></td>
+        <td><button class="download" id="download1">下載 PDF</button></td>
+        <td><button class="download" id="download2">下載 PDF</button></td>
+        <td><button class="download" id="download3">下載 PDF</button></td>
       </tr>
       <tr>
         <th>目前已套用編號</th>
