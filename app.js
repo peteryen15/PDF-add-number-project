@@ -20,9 +20,9 @@ document.querySelector("#selectPDF3").addEventListener("change", (e) => {
   fileReader3.readAsArrayBuffer(file);
 });
 
-let copy1;
-let copy2;
-let copy3;
+let copy1 = 1;
+let copy2 = 1;
+let copy3 = 1;
 
 // 輸入份數
 document.querySelector("#inputNum1").addEventListener("change", (e) => {
@@ -51,64 +51,70 @@ document.querySelector("#download3").addEventListener("click", () => {
 });
 
 async function modifyPdf(pdf, number, copy, type) {
-  // const number = "000001";
+  if (pdf == null) {
+    alert("請選擇合約PDF");
+  } else if (copy < 1) {
+    alert("請確認輸入的份數是否正確");
+  } else {
+    // const number = "000001";
 
-  // Fetch an existing PDF document
-  // const url = "./test1.pdf";
-  // const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+    // Fetch an existing PDF document
+    // const url = "./test1.pdf";
+    // const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
-  // Load a PDFDocument from the existing PDF bytes
-  const pdfDoc = await PDFDocument.load(pdf);
+    // Load a PDFDocument from the existing PDF bytes
+    const pdfDoc = await PDFDocument.load(pdf);
 
-  // Create a new PDFDocument
-  const donorPdfDoc = await PDFDocument.create();
+    // Create a new PDFDocument
+    const donorPdfDoc = await PDFDocument.create();
 
-  // Get the pages of the document
-  let pages = pdfDoc.getPages();
+    // Get the pages of the document
+    let pages = pdfDoc.getPages();
 
-  // 第一份和最後一份
-  let startNum = (parseFloat(number) + 1)
-    .toLocaleString("en-US")
-    .padStart(5, "0");
-  let endNum = (parseFloat(number) + parseFloat(copy))
-    .toLocaleString("en-US")
-    .padStart(5, "0");
-
-  // Embed the Helvetica font
-  const helveticaFont = await donorPdfDoc.embedFont(StandardFonts.Helvetica);
-
-  for (let i = 0; i < copy; i++) {
-    let copyNum = (parseFloat(startNum) + i)
+    // 第一份和最後一份
+    let startNum = (parseFloat(number) + 1)
+      .toLocaleString("en-US")
+      .padStart(5, "0");
+    let endNum = (parseFloat(number) + parseFloat(copy))
       .toLocaleString("en-US")
       .padStart(5, "0");
 
-    for (let page in pages) {
-      const [donorPage] = await donorPdfDoc.copyPages(pdfDoc, [page]);
+    // Embed the Helvetica font
+    const helveticaFont = await donorPdfDoc.embedFont(StandardFonts.Helvetica);
 
-      // Get the width and height of the page
-      const { width, height } = donorPage.getSize();
+    for (let i = 0; i < copy; i++) {
+      let copyNum = (parseFloat(startNum) + i)
+        .toLocaleString("en-US")
+        .padStart(5, "0");
 
-      // Draw a string of text diagonally across the page
-      donorPage.drawText(copyNum, {
-        x: 5,
-        y: height - 25,
-        size: 25,
-        font: helveticaFont,
-        color: rgb(0.95, 0.1, 0.1),
-        rotate: degrees(0),
-      });
+      for (let page in pages) {
+        const [donorPage] = await donorPdfDoc.copyPages(pdfDoc, [page]);
 
-      donorPdfDoc.addPage(donorPage);
+        // Get the width and height of the page
+        const { width, height } = donorPage.getSize();
+
+        // Draw a string of text diagonally across the page
+        donorPage.drawText(copyNum, {
+          x: 5,
+          y: height - 25,
+          size: 25,
+          font: helveticaFont,
+          color: rgb(0.95, 0.1, 0.1),
+          rotate: degrees(0),
+        });
+
+        donorPdfDoc.addPage(donorPage);
+      }
     }
+
+    // Serialize the PDFDocument to bytes (a Uint8Array)
+    const pdfBytes = await donorPdfDoc.save();
+
+    // Trigger the browser to download the PDF document
+    download(
+      pdfBytes,
+      startNum + "~" + endNum + "_" + type + ".pdf",
+      "application/pdf"
+    );
   }
-
-  // Serialize the PDFDocument to bytes (a Uint8Array)
-  const pdfBytes = await donorPdfDoc.save();
-
-  // Trigger the browser to download the PDF document
-  download(
-    pdfBytes,
-    startNum + "~" + endNum + "_" + type + ".pdf",
-    "application/pdf"
-  );
 }
