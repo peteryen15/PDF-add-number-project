@@ -3,7 +3,7 @@ dotenv.config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const session = require("express-session");
+const session = require("cookie-session");
 const flash = require("connect-flash");
 const downloadRoutes = require("./routes/download-routes");
 const updateRoutes = require("./routes/update-routes");
