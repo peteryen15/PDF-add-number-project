@@ -1,5 +1,6 @@
 const { degrees, PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 const modifyPdf = async function (url, number, copy, type) {
   // Fetch an existing PDF document
