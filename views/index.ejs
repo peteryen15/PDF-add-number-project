@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF加編號</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <th>步驟一 : 確認合約PDF</th>
+        </tr>
+        <tr>
+          <th>步驟二 : 輸入份數</th>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <th>目前已套用編號</th>
+        </tr>
+      </table>
+      <table>
+        <form action="/download1" method="POST">
+          <tr>
+            <td>N95</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="/pdfs/N95.pdf" target="_blank"><%= pdf1.pdfName %></a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                min="1"
+                class="inputNum"
+                value="1"
+                name="copy1"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><button class="download">下載 PDF</button></td>
+          </tr>
+          <tr>
+            <td><%= pdf1.usedNumber %></td>
+          </tr>
+        </form>
+      </table>
+      <table>
+        <form action="/download2" method="POST">
+          <tr>
+            <td>南區</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="/pdfs/南區.pdf" target="_blank"><%= pdf2.pdfName %></a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                min="1"
+                class="inputNum"
+                value="1"
+                name="copy2"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><button class="download">下載 PDF</button></td>
+          </tr>
+          <tr>
+            <td><%= pdf2.usedNumber %></td>
+          </tr>
+        </form>
+      </table>
+      <table>
+        <form action="/download3" method="POST">
+          <tr>
+            <td>原制度</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="/pdfs/原制度.pdf" target="_blank"><%= pdf3.pdfName %></a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                min="1"
+                class="inputNum"
+                value="1"
+                name="copy3"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><button class="download">下載 PDF</button></td>
+          </tr>
+          <td><%= pdf3.usedNumber %></td>
+        </form>
+      </table>
+    </div>
+    <div>
+      <a href="/update">更改合約PDF</a>
+    </div>
+  </body>
+</html>
