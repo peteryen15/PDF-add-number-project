@@ -24,7 +24,7 @@ const modifyPdf = async function (url, number, copy, type) {
     .padStart(5, "0");
 
   // 完成pdf檔名
-  const newPdf = startNum + "~" + endNum + "_" + type + ".pdf";
+  const donePdfName = startNum + "~" + endNum + "_" + type + ".pdf";
 
   // Embed the Helvetica font
   const helveticaFont = await donorPdfDoc.embedFont(StandardFonts.Helvetica);
@@ -58,7 +58,7 @@ const modifyPdf = async function (url, number, copy, type) {
   const pdfBytes = await donorPdfDoc.save();
 
   // 儲存完成的pdf到 "/downloads" 目錄
-  fs.createWriteStream("./public/downloads/" + newPdf).write(pdfBytes);
+  fs.createWriteStream("./public/downloads/" + donePdfName).write(pdfBytes);
 
   // // Trigger the browser to download the PDF document
   // download(
@@ -67,7 +67,7 @@ const modifyPdf = async function (url, number, copy, type) {
   //   "application/pdf"
   // );
 
-  return { newUsedNumber: endNum, newPdf };
+  return { newUsedNumber: endNum, donePdfName };
 };
 
 module.exports = modifyPdf;

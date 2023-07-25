@@ -5,12 +5,22 @@ router.post("/download1", async (req, res, next) => {
   const { copy1 } = req.body;
 
   try {
-    const newPdf = await downloadPdf("N95", copy1);
-    if (newPdf) {
-      return res.redirect("http://localhost:3000/downloads/" + newPdf);
-    } else {
-      return next("下載失敗");
-    }
+    downloadPdf("N95", copy1).then((stream) => {
+      stream.on("finish", () => {
+        console.log(stream);
+        return res.redirect("/");
+      });
+      // return res.redirect("http://localhost:3000/downloads/" + donePdfName);
+    });
+    // stream.on("finish", () => {
+    //   console.log(stream);
+    //   return res.redirect("/");
+    // });
+    // if (newPdf) {
+    //   return res.redirect("http://localhost:3000/downloads/" + newPdf);
+    // } else {
+    //   return next("下載失敗");
+    // }
   } catch (e) {
     return next(e);
   }

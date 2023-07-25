@@ -32,7 +32,7 @@
           </tr>
           <tr>
             <td>
-              <a href="/pdfs/N95.pdf" target="_blank"><%= pdf1.pdfName %></a>
+              <a href="/pdfs/N95.pdf" target="_blank"><%= pdf1.filename %></a>
             </td>
           </tr>
           <tr>
@@ -50,7 +50,7 @@
             <td><button class="download">下載 PDF</button></td>
           </tr>
           <tr>
-            <td><%= pdf1.usedNumber %></td>
+            <td><%= pdf1.metadata.usedNumber %></td>
           </tr>
         </form>
       </table>
@@ -61,7 +61,7 @@
           </tr>
           <tr>
             <td>
-              <a href="/pdfs/南區.pdf" target="_blank"><%= pdf2.pdfName %></a>
+              <a href="/pdfs/南區.pdf" target="_blank"><%= pdf2.filename %></a>
             </td>
           </tr>
           <tr>
@@ -79,7 +79,7 @@
             <td><button class="download">下載 PDF</button></td>
           </tr>
           <tr>
-            <td><%= pdf2.usedNumber %></td>
+            <td><%= pdf2.metadata.usedNumber %></td>
           </tr>
         </form>
       </table>
@@ -90,7 +90,9 @@
           </tr>
           <tr>
             <td>
-              <a href="/pdfs/原制度.pdf" target="_blank"><%= pdf3.pdfName %></a>
+              <a href="/pdfs/原制度.pdf" target="_blank"
+                ><%= pdf3.filename %></a
+              >
             </td>
           </tr>
           <tr>
@@ -107,7 +109,7 @@
           <tr>
             <td><button class="download">下載 PDF</button></td>
           </tr>
-          <td><%= pdf3.usedNumber %></td>
+          <td><%= pdf3.metadata.usedNumber %></td>
         </form>
       </table>
     </div>
