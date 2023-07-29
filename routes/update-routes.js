@@ -2,27 +2,24 @@ const router = require("express").Router();
 const formidable = require("formidable");
 const findPdf = require("../controllers/findPdf");
 const updatePdf = require("../controllers/updatePdf");
-const multer = require("multer");
-const upload = multer();
-// const fs = require("fs");
-// const Pdf = require("../models/pdf-model");
 
 router.post("/update1", async (req, res, next) => {
+  const type = "N95";
+
   const form = new formidable.IncomingForm();
   try {
     const [fields, files] = await form.parse(req);
-
     const pdfFilePath = files.pdf1[0].filepath;
     const pdfFileName = files.pdf1[0].originalFilename;
 
-    const findPdf1 = await findPdf("N95");
+    const findType = await findPdf(type);
 
-    if (findPdf1) {
-      updatePdf(pdfFilePath, pdfFileName, findPdf1)
+    if (findType) {
+      updatePdf(pdfFilePath, pdfFileName, findType)
         .then((stream) => {
           stream.on("finish", () => {
             console.log(
-              `"N95" 已更新為 ${stream.filename}，目前已套用編號: ${stream.options.metadata.usedNumber}`
+              `${type} 已更新為 ${stream.filename}，目前已套用編號: ${stream.options.metadata.usedNumber}`
             );
             console.log("-----------------------");
             return res.redirect("/");
@@ -33,24 +30,6 @@ router.post("/update1", async (req, res, next) => {
         });
     } else {
       return next("找不到pdf，或是正在上傳");
-      // const newPdf = {
-      //   metadata: {
-      //     type: "N95",
-      //     usedNumber: "00000",
-      //   },
-      // };
-      // updatePdf(pdfFilePath, pdfFileName, newPdf)
-      //   .then((stream) => {
-      //     stream.on("finish", () => {
-      //       console.log(
-      //         `"N95" 已更新為 ${stream.filename}，目前已套用編號: ${stream.options.metadata.usedNumber}`
-      //       );
-      //       return res.redirect("/");
-      //     });
-      //   })
-      //   .catch((e) => {
-      //     return next(e);
-      //   });
     }
   } catch (e) {
     if (
@@ -65,45 +44,85 @@ router.post("/update1", async (req, res, next) => {
   }
 });
 
-router.post("/update2", upload.single("pdf2"), async (req, res, next) => {
-  if (req.file) {
-    const pdfName = req.file.originalname;
-    const pdfBuffer = req.file.buffer;
+router.post("/update2", async (req, res, next) => {
+  const type = "南區";
 
-    // 儲存pdf到 "/pdf" 目錄
-    fs.createWriteStream("./public/pdfs/南區.pdf").write(pdfBuffer);
+  const form = new formidable.IncomingForm();
+  try {
+    const [fields, files] = await form.parse(req);
+    const pdfFilePath = files.pdf2[0].filepath;
+    const pdfFileName = files.pdf2[0].originalFilename;
 
-    try {
-      await Pdf.updateOne({ pdfType: "南區" }, { pdfName });
-    } catch (e) {
-      next(e);
+    const findType = await findPdf(type);
+
+    if (findType) {
+      updatePdf(pdfFilePath, pdfFileName, findType)
+        .then((stream) => {
+          stream.on("finish", () => {
+            console.log(
+              `${type} 已更新為 ${stream.filename}，目前已套用編號: ${stream.options.metadata.usedNumber}`
+            );
+            console.log("-----------------------");
+            return res.redirect("/");
+          });
+        })
+        .catch((e) => {
+          return next(e);
+        });
+    } else {
+      return next("找不到pdf，或是正在上傳");
     }
-
-    return res.redirect("/");
-  } else {
-    req.flash("update_err_south", "請選擇PDF");
-    return res.redirect("/update");
+  } catch (e) {
+    if (
+      e.message ==
+      "options.allowEmptyFiles is false, file size should be greater than 0"
+    ) {
+      req.flash("update_err_south", "請選擇PDF");
+      return res.redirect("/update");
+    } else {
+      return next(e);
+    }
   }
 });
 
-router.post("/update3", upload.single("pdf3"), async (req, res, next) => {
-  if (req.file) {
-    const pdfName = req.file.originalname;
-    const pdfBuffer = req.file.buffer;
+router.post("/update3", async (req, res, next) => {
+  const type = "原制度";
 
-    // 儲存pdf到 "/pdf" 目錄
-    fs.createWriteStream("./public/pdfs/原制度.pdf").write(pdfBuffer);
+  const form = new formidable.IncomingForm();
+  try {
+    const [fields, files] = await form.parse(req);
+    const pdfFilePath = files.pdf3[0].filepath;
+    const pdfFileName = files.pdf3[0].originalFilename;
 
-    try {
-      await Pdf.updateOne({ pdfType: "原制度" }, { pdfName });
-    } catch (e) {
-      next(e);
+    const findType = await findPdf(type);
+
+    if (findType) {
+      updatePdf(pdfFilePath, pdfFileName, findType)
+        .then((stream) => {
+          stream.on("finish", () => {
+            console.log(
+              `${type} 已更新為 ${stream.filename}，目前已套用編號: ${stream.options.metadata.usedNumber}`
+            );
+            console.log("-----------------------");
+            return res.redirect("/");
+          });
+        })
+        .catch((e) => {
+          return next(e);
+        });
+    } else {
+      return next("找不到pdf，或是正在上傳");
     }
-
-    return res.redirect("/");
-  } else {
-    req.flash("update_err_orig", "請選擇PDF");
-    return res.redirect("/update");
+  } catch (e) {
+    if (
+      e.message ==
+      "options.allowEmptyFiles is false, file size should be greater than 0"
+    ) {
+      req.flash("update_err_orig", "請選擇PDF");
+      return res.redirect("/update");
+    } else {
+      return next(e);
+    }
   }
 });
 

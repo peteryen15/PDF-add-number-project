@@ -1,10 +1,14 @@
 const { degrees, PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 const fs = require("fs");
+const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 
-const modifyPdf = async function (url, number, copy, type) {
-  // Fetch an existing PDF document
-  const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+const modifyPdf = async function (existingPdfBytes, findPdf, copy) {
+  // // Fetch an existing PDF document
+  // const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+
+  const number = findPdf.metadata.usedNumber;
+  const type = findPdf.metadata.type;
 
   // Load a PDFDocument from the existing PDF bytes
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -60,14 +64,16 @@ const modifyPdf = async function (url, number, copy, type) {
   // 儲存完成的pdf到 "/downloads" 目錄
   fs.createWriteStream("./public/downloads/" + donePdfName).write(pdfBytes);
 
-  // // Trigger the browser to download the PDF document
-  // download(
-  //   pdfBytes,
-  //   startNum + "~" + endNum + "_" + type + ".pdf",
-  //   "application/pdf"
-  // );
+  // 更新"目前已套用編號"
+  const file = mongoose.connection.db.collection("pdfs.files");
+  await file.updateOne(
+    {
+      _id: findPdf._id,
+    },
+    { $set: { "metadata.usedNumber": endNum } }
+  );
 
-  return { newUsedNumber: endNum, donePdfName };
+  return donePdfName;
 };
 
 module.exports = modifyPdf;
